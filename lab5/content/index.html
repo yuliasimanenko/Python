@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Page Title</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<h1>Считывание из формы</h1>
+<p>This is a paragraph.</p>
+<script>
+    function do_This(Element){
+        alert(Element.text.toString())
+    }
+</script>
+    <div class="content">
+        <div class="information">
+            <div class="btn_">
+                <a onclick=display_options(1) class="bot5">Чайники</a>
+                <a onclick=display_options(2) class="bot5">Middle</a>
+                <a onclick=display_options(3) class="bot5">Сеньер Помидор</a>
+            </div>
+            <div class="choose-select" id="choose-select" style="display: none"></div>
+        </div>
+        <div  id="picture-container" class="picture">
+            <img id="picture" src="" style="display: none">
+        </div>
+    </div>
+        <script>
+            let name ;
+            function display_options(level) {
+                document.getElementById("choose-select").innerHTML = '';
+                document.getElementById("picture").innerHTML = '';
+                document.getElementById("picture-container").style.backgroundColor = '#1a1a1a'
+                fetch(`/get_options?level=${level}`)
+                    .then(responce => responce.json())
+                    .then(json => {
+                        json['names'].forEach(name => {
+                            let element = document.getElementById("choose-select");
+                            element.style.display = "block";
+                            element.innerHTML += `<a class=\"choose-option\" onclick="check_name(this)">${name}</a>`;
+                        });
+                        document.getElementById("picture").src = json['url'];
+                        document.getElementById("picture").style.display = "block";
+                        name = json['person'];
+                    });
+            }
+
+            function check_name(Element) {
+                document.getElementById("picture-container").style.backgroundColor =
+                    (name === Element.text) ? '#007633' : '#ff3500';
+                setTimeout(()=>{
+                    document.getElementById("picture-container").style.backgroundColor = '#1a1a1a'
+                }, 2000)
+            }
+
+        </script>
+</body>
+</html>
