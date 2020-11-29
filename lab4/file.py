@@ -79,6 +79,15 @@ def create_text_from_dict(dictionary, length_of_text, list_of_text):
     return list_of_text
 
 
+list_function = []
+
+
+def test_registration(f):
+    list_function.append(f)
+    return f
+
+
+@test_registration
 def make_new_story(file_or_list):
     dictionary = mem_dict(file_or_list)
     text_list = [random.choice(list(dictionary.keys()))]
@@ -87,6 +96,7 @@ def make_new_story(file_or_list):
     return list_of_story
 
 
+@test_registration
 def print_the_story(word_list):
     for word in word_list:
         print(word, end='  ')

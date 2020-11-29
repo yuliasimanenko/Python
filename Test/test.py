@@ -1,4 +1,4 @@
-
+import random
 #name = input()
 #A = 'Yes' if name != "Test" else 'No'
 #print (A)
@@ -38,7 +38,7 @@ def num_of_items(count):
     string = 'many' if count >= 10 else str(count)
     return "Number of: " + string
 
-print (num_of_items(9))
+# print (num_of_items(9))
 
 
 # 2. 
@@ -49,7 +49,7 @@ def start_end_symbols(s):
     if len(s) > 3 : 
         return s[:2:] + s[-2:] 
     return s
-print(start_end_symbols("welcome"))
+# print(start_end_symbols("welcome"))
 
 
 # 3. 
@@ -68,7 +68,7 @@ def replace_char(s):
             string += s[i]
     return string
 
-print(replace_char('bibble'))
+# print(replace_char('bibble'))
 
 
 # 4
@@ -82,7 +82,7 @@ def str_mix(a, b):
         return a + " " + b
     return b[:2]+a[2:] + " " + a[:2]+b[2:]
 
-print (str_mix('max','pid'))
+# print (str_mix('max','pid'))
 
 def test(res, exp):
     print(res == exp)
@@ -103,7 +103,7 @@ def me(words):
             count += 1
     return count
 inp = ['AfgA', 'SoffsS','AA','sdsdg']
-print (me(inp))
+# print (me(inp))
 
 # 2. 
 # Вх: список строк, Возвр: список со строками (упорядочено)
@@ -120,7 +120,7 @@ def fx(words):
     x_list.extend(words)
     return x_list
 w =  ['tix', 'xyz', 'apple', 'xacadu', 'aabbbccc']
-print(fx(w))
+# print(fx(w))
 #return sorted(words, key = lambda x: (x[0] != 'x', x))
 
 
@@ -134,5 +134,7 @@ def meth(kort):
     return new_kort
 ex = [(1, 7), (1, 3), (3, 4, 5), (2, 2)]
 
-print(meth(ex))
-
+# print(meth(ex))
+a = ["Simanenko+Matskevivh", "Timofeev+Ravin", "Kostoysov", "Smirnova", "Dashkova+Musabekov", "Pristupa+Yakovleva"]
+random.shuffle(a)
+print(a)
