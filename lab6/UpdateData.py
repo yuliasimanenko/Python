@@ -1,4 +1,6 @@
 import feedparser
+from validator_collection import checkers
+import re
 
 
 def get_rss_items(url):
@@ -16,19 +18,19 @@ def get_rss_items(url):
 
 url_by_name = {
     'habr': 'https://habr.com/ru/rss/interesting/',
-    'ecowars': 'http://www.ecowars.ru/news/rss/'
+    'ecowars': 'http://www.ecowars.ru/news/rss/',
+    'sport': 'https://www.sport-express.ru/services/materials/news/se/'
 }
+# https://bash.im/rss/
 
 
 class UpdateData:
     def __init__(self, db_service):
         self.db_service = db_service
-        print("Updater created")
 
     def update_fetch(self, website_name):
-        # if website_name is not isinstance(str):
-        #     print(type(website_name))
-        #     raise TypeError
+        if not isinstance(website_name, str):
+            raise TypeError
         try:
             url = url_by_name[website_name]
         except NameError:
@@ -41,3 +43,18 @@ class UpdateData:
                 self.db_service.insert(entry)
                 print(f"web update {website_name}")
         pass
+
+    @staticmethod
+    def add_url(url):
+        if not isinstance(url, str):
+            raise TypeError
+        if not checkers.is_url(url):
+            return -1
+        name = url.replace("https://", "").replace("www.", "").replace("http://", "")
+        name = name[:name.index('.')]
+        element = {
+            name: url
+        }
+        url_by_name.update(element)
+        return name
+

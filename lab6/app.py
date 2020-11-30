@@ -3,8 +3,7 @@ from SQL import SQL
 from UpdateData import UpdateData
 
 app = Flask(__name__)
-# db = SQL('rss.db')
-# updater = UpdateData(db)
+
 POSTS_PER_PAGE = 5
 
 
@@ -32,13 +31,23 @@ def view():
     site = request.args.get('site', default='ecowars', type=str)
     page = request.args.get('page', default=1, type=int)
     db = SQL(site)
-    limit = 5
+    limit = POSTS_PER_PAGE
     skip = limit * (page - 1)
     entries = db.get(skip, limit)
-    print("view worked")
     return {
         'entries': entries
     }
+
+
+@app.route('/add')
+def add():
+    url = request.args.get('url', default='ecowars', type=str)
+
+    ret_name = UpdateData.add_url(url)
+    if not isinstance(ret_name, str):
+        return {'site': ""}, 500
+    else:
+        return {'site': ret_name}
 
 
 if __name__ == '__main__':

@@ -23,7 +23,7 @@ function update(){
                     content.innerHTML += `<div class="item">
                         <div class="title">${entry[1]}</div>
                         <div class="description">${entry[2]}</div>
-                        <div class="link">${entry[3]}</div>
+                        <a class="link" href="${entry[3]}">${entry[3]}</a>
                     </div>`;
                 }
                 last_page = entries.length < 5;
@@ -53,6 +53,28 @@ function drawNextPage() {
     if (!last_page)
         container.innerHTML += `<button onclick="switchPage(${cur_page+1})" class="butt">Next</button>`;
 }
+function add_rss_url() {
+    const container = document.getElementById('rss_url');
+    let url = container.value;
+    fetch(`/add?url=${url}`)
+    .then(response => {
+      if (response.ok)
+        return response.json();
+      else {
+          document.getElementById('rss_url').value = '';
+          alert("incorrect URL")
+      }
+    })
+    .then(json => {
+        cur_site =json['site'];
+        switchPage(1);
+        document.getElementById('rss_url').value = '';
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+}
+
 
 
 
