@@ -29,7 +29,7 @@ def load():
 def view():
     site = request.args.get('site', default='ecowars', type=str)
     page = request.args.get('page', default=1, type=int)
-    limit = 10
+    limit = 5
     skip = limit * (page - 1)
     entries = db.get(site, skip, limit)
     return {

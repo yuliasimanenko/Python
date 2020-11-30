@@ -26,7 +26,7 @@ function update(){
                         <div class="link">${entry[3]}</div>
                     </div>`;
                 }
-                last_page = entries.length < 10;
+                last_page = entries.length < 5;
 
                 if (!last_page) {
                     drawNextPage();

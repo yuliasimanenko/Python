@@ -25,7 +25,12 @@ class UpdateData:
         self.db_service = db_service
 
     def update_fetch(self, website_name):
-        url = url_by_name[website_name]
+        if website_name is not isinstance(str):
+            raise TypeError
+        try:
+            url = url_by_name[website_name]
+        except NameError:
+            return -1
         feed = feedparser.parse(url)
         for entry in feed.entries:
             if not self.db_service.has(website_name, entry.title):
