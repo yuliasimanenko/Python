@@ -23,16 +23,21 @@ url_by_name = {
 class UpdateData:
     def __init__(self, db_service):
         self.db_service = db_service
+        print("Updater created")
 
     def update_fetch(self, website_name):
-        if website_name is not isinstance(str):
-            raise TypeError
+        # if website_name is not isinstance(str):
+        #     print(type(website_name))
+        #     raise TypeError
         try:
             url = url_by_name[website_name]
         except NameError:
             return -1
         feed = feedparser.parse(url)
+        for ent in feed.entries:
+            print(ent.title)
         for entry in feed.entries:
-            if not self.db_service.has(website_name, entry.title):
-                self.db_service.insert(entry, website_name)
+            if not self.db_service.has(entry.title):
+                self.db_service.insert(entry)
+                print(f"web update {website_name}")
         pass
